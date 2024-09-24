@@ -1,0 +1,191 @@
+/* Primary */
+QPushButton[class="primary"] {
+    background-color: #007bff;
+    color: white;
+    border-radius: 12px;
+    height: 35px;
+    padding: 0 15px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #007bff;
+    outline: none;
+}
+
+QPushButton[class="primary"]:hover {
+    background-color: #0056b3;
+    border: 2px solid #0056b3;
+}
+
+QPushButton[class="primary"]:pressed {
+    background-color: #004085;
+    border: 2px solid #004085;
+}
+
+/* Secondary */
+QPushButton[class="secondary"] {
+    background-color: #6c757d;
+    color: white;
+    border-radius: 12px;
+    height: 35px;
+    padding: 0 15px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #6c757d;
+    outline: none;
+}
+
+QPushButton[class="secondary"]:hover {
+    background-color: #5a6268;
+    border: 2px solid #5a6268;
+}
+
+QPushButton[class="secondary"]:pressed {
+    background-color: #4e555b;
+    border: 2px solid #4e555b;
+}
+
+/* Success */
+QPushButton[class="success"] {
+    background-color: #28a745;
+    color: white;
+    border-radius: 12px;
+    height: 35px;
+    padding: 0 15px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #28a745;
+    outline: none;
+}
+
+QPushButton[class="success"]:hover {
+    background-color: #218838;
+    border: 2px solid #218838;
+}
+
+QPushButton[class="success"]:pressed {
+    background-color: #1e7e34;
+    border: 2px solid #1e7e34;
+}
+
+/* Info */
+QPushButton[class="info"] {
+    background-color: #17a2b8;
+    color: white;
+    border-radius: 12px;
+    height: 35px;
+    padding: 0 15px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #17a2b8;
+    outline: none;
+}
+
+QPushButton[class="info"]:hover {
+    background-color: #138496;
+    border: 2px solid #138496;
+}
+
+QPushButton[class="info"]:pressed {
+    background-color: #117a8b;
+    border: 2px solid #117a8b;
+}
+
+/* Warning */
+QPushButton[class="warning"] {
+    background-color: #ffc107;
+    color: #212529; /* Gris foncé pour le texte */
+    border-radius: 12px;
+    height: 35px;
+    padding: 0 15px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #ffc107;
+    outline: none;
+}
+
+QPushButton[class="warning"]:hover {
+    background-color: #e0a800;
+    border: 2px solid #e0a800;
+}
+
+QPushButton[class="warning"]:pressed {
+    background-color: #d39e00;
+    border: 2px solid #d39e00;
+}
+
+/* Danger */
+QPushButton[class="danger"] {
+    background-color: #dc3545;
+    color: white;
+    border-radius: 12px;
+    height: 35px;
+    padding: 0 15px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #dc3545;
+    outline: none;
+}
+
+QPushButton[class="danger"]:hover {
+    background-color: #c82333;
+    border: 2px solid #c82333;
+}
+
+QPushButton[class="danger"]:pressed {
+    background-color: #bd2130;
+    border: 2px solid #bd2130;
+}
+
+/* Light */
+QPushButton[class="light"] {
+    background-color: #f8f9fa;
+    color: #212529; 
+    border-radius: 12px;
+    height: 35px;
+    padding: 0 15px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #f8f9fa;
+    outline: none;
+}
+
+QPushButton[class="light"]:hover {
+    background-color: #e2e6ea;
+    border: 2px solid #e2e6ea;
+}
+
+QPushButton[class="light"]:pressed {
+    background-color: #dae0e5;
+    border: 2px solid #dae0e5;
+}
+
+/* Dark */
+QPushButton[class="dark"] {
+    background-color: #343a40;
+    color: white;
+    border-radius: 12px;
+    height: 35px;
+    padding: 0 15px;
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    border: 2px solid #343a40;
+    outline: none;
+}
+
+QPushButton[class="dark"]:hover {
+    background-color: #23272b;
+    border: 2px solid #23272b;
+}
+
+QPushButton[class="dark"]:pressed {
+    background-color: #1d2124; 
+    border: 2px solid #1d2124;
+}

@@ -1,0 +1,51 @@
+QLabel {
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+QLabel[role="title"] {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007bff;          
+}
+
+QLabel[role="page_title"] {
+    font: 87 22pt "Roboto Black";
+    color: #0f037c;  
+}
+
+QLabel[class="primary"] {
+    color: #007bff;  
+}
+
+QLabel[class="secondary"] {
+    color: #6c757d;  
+}
+
+QLabel[class="light"] {
+    color: #f8f9fa;  
+}
+
+QLabel[class="dark"] {
+    color: #030303;  
+}
+
+
+QLabel[class="success"] {
+    color: #28a745;  
+}
+
+QLabel[class="danger"] {
+    color: #dc3545;  
+}
+
+QLabel[class="warning"] {
+    color: #ffc107;  
+}
+
+QLabel[class="info"] {
+    color: #17a2b8;  
+}

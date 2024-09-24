@@ -1,0 +1,24 @@
+/* QLineEdit */
+QLineEdit {
+    background-color: #ffffff;
+    color: #495057;          
+    border: 1px solid #ced4da;  
+    border-radius: 5px;
+    padding: 8px 12px;       
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #007bff;  
+    outline: none;              
+}
+
+/* QLineEdit pour les entrées invalides */
+QLineEdit[valid="false"] {
+    border: 2px solid #dc3545;  
+}
+
+QLineEdit[valid="false"]:focus {
+    border: 2px solid #dc3545;
+}

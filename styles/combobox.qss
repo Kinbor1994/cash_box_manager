@@ -1,0 +1,19 @@
+QComboBox {
+    background-color: #ffffff;  
+    border: 2px solid #ced4da;  
+    border-radius: 5px;
+    padding: 5px 10px;  
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    color: #1a1c1d;  
+}
+
+QComboBox QAbstractItemView {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    selection-background-color: #007bff;  
+    selection-color: white;  
+}
+
+
+

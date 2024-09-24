@@ -1,0 +1,25 @@
+QDateEdit {
+    border: 1px solid #ced4da; 
+    padding: 5px;
+    border-radius: 4px; 
+    height: 35px; 
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+}
+
+QDateEdit:focus {
+    border: 1px solid #80bdff; 
+    outline: none; 
+}
+
+QDateEdit QAbstractItemView {
+    font-family: "Segoe UI", sans-serif;
+    font-size: 14px;
+    color: #6c757d; 
+}
+
+QCalendarWidget {
+    background-color: #383434; 
+    border: 1px solid #ced4da; 
+}
+

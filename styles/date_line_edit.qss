@@ -1,0 +1,33 @@
+/* QDateEdit */
+QDateEdit {
+    background-color: #ffffff;  /* Fond blanc */
+    border: 1px solid #ced4da;  /* Bordure légère Bootstrap */
+    border-radius: 5px;
+    padding: 5px 10px;  /* Rembourrage interne */
+    font-family: "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    color: #495057;  /* Couleur du texte Bootstrap */
+}
+
+QDateEdit::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 30px;
+    border-left-width: 1px;
+    border-left-color: #ced4da;
+    border-left-style: solid;
+    border-top-right-radius: 5px;  /* Coins arrondis pour la flèche */
+    border-bottom-right-radius: 5px;
+    background-color: #e9ecef;  /* Fond léger pour la flèche */
+}
+
+QDateEdit::down-arrow {
+    image: url(":/icons/calendar.png");  /* Icône personnalisée pour le calendrier */
+    width: 15px;
+    height: 15px;
+}
+
+QDateEdit::up-arrow, QDateEdit::down-arrow {
+    border: none;
+    background: none;
+}

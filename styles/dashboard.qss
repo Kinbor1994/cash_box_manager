@@ -1,0 +1,5 @@
+QWidget {
+    background-color: white; 
+    color: #ffffff;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
