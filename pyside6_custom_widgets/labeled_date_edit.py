@@ -118,7 +118,10 @@ class LabeledDateEdit(QWidget):
     def on_change(self, callback):
         if callback:
             self.date_edit.date_edit.dateChanged.connect(callback)
-            
+
+    def clear_content(self):
+        self.date_edit.clear_content()
+        
 if __name__ == "__main__":
     from imports import QApplication, QMainWindow, QVBoxLayout, QWidget
     import sys

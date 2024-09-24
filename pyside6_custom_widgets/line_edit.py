@@ -222,6 +222,9 @@ class LineEdit(QWidget):
         else:
             self.hide_error()
         
+    def clear_content(self):
+        self.line_edit.clear()
+        
 if __name__ == '__main__':
     from imports import QApplication, QMainWindow, QVBoxLayout, QWidget, QPushButton, QLabel
 

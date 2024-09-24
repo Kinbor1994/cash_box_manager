@@ -1,4 +1,4 @@
-from imports import QWidget, QVBoxLayout, QDateEdit, QLabel, QEvent
+from imports import QWidget, QVBoxLayout, QDateEdit, QLabel, QEvent, QDate
 
 from utils.qss_file_loader import load_stylesheet
 
@@ -186,8 +186,14 @@ class DateEdit(QWidget):
         else:
             self.hide_error()
 
+    def clear_content(self):
+        if self.min_date:
+            self.date_edit.setDate(self.min_date)
+        else:
+            self.date_edit.setDate(QDate(2000, 1, 1))
+            
 if __name__ == "__main__":
-    from imports import QApplication, QMainWindow, QDate
+    from imports import QApplication, QMainWindow
     from qt_material import apply_stylesheet
     
     app = QApplication([])

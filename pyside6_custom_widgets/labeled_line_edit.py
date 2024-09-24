@@ -117,6 +117,9 @@ class LabeledLineEdit(QWidget):
         if callback:
             self.line_edit.line_edit.textChanged.connect(callback)
 
+    def clear_content(self):
+        self.line_edit.clear_content()
+        
 if __name__ == "__main__":
     from imports import QApplication, QMainWindow, QVBoxLayout, QWidget
     import sys

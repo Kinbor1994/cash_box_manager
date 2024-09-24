@@ -233,6 +233,9 @@ class ComboBox(QWidget):
         else:
             self.hide_error()
             
+    def clear_content(self):
+        self.combobox.setCurrentIndex(0)
+        
 if __name__ == "__main__":
     from PySide6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
     import sys

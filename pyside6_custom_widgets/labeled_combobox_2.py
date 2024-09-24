@@ -124,6 +124,9 @@ class LabeledComboBox(QWidget):
         if callback:
             self.combobox.combobox.currentIndexChanged.connect(callback)
             
+    def clear_content(self):
+        self.combobox.clear_content()
+        
 if __name__ == "__main__":
     from imports import QApplication, QMainWindow, QVBoxLayout, QWidget
     import sys
