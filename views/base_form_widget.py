@@ -1,9 +1,6 @@
-import sys
-from pathlib import Path
-
 from sqlalchemy import Date, DateTime, Float, Integer, String
 
-from imports import QDialog, QSize, QVBoxLayout, QHBoxLayout, QFrame, QSpacerItem, QSizePolicy, QMessageBox, QWidget
+from imports import QDialog, QSize, QVBoxLayout, QHBoxLayout, QFrame, QSpacerItem, QSizePolicy, QMessageBox
 from pyside6_custom_widgets.button import Button
 from pyside6_custom_widgets.label import Label
 from pyside6_custom_widgets.labeled_combobox_2 import LabeledComboBox
@@ -17,7 +14,7 @@ class BaseFormWidget(QDialog):
         super().__init__(parent)
         self.setWindowTitle(title)
         self.setGeometry(100,100,448, 400)
-        self.setMinimumSize(QSize(448, 400))
+        #self.setMinimumSize(QSize(448, 400))
         #self.setMaximumSize(QSize(448, 400))
         set_app_icon(self)
         self.title = title
@@ -136,17 +133,25 @@ class BaseFormWidget(QDialog):
         
         return all_valid
         
-    # TODO Ajouter la logic pour effacer les differents champs après un submit et affiche un message de succès ou d'échec.
     def submit(self):
         """
         Handle form submission for both adding and editing.
         """
-        form_data = self.get_form_data()
-        if self.validate_fields():
-            self.controller.create(**form_data)
-        else:
-            QMessageBox.critical(self, "Error", "Vous devez correctement renseigner tous les champs importants.")
-
+        try:
+            form_data = self.get_form_data()
+            if self.validate_fields():
+                self.controller.create(**form_data)
+                QMessageBox.information(self, "Success", "Opération effectuée avec succès.")
+                self.clear_fieds()
+            else:
+                QMessageBox.warning(self, "Error", "Vous devez correctement renseigner tous les champs importants.")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Une erreur est survenue: \n{str(e)}")
+            
+    def clear_fieds(self):
+        for field in self.fields:
+            field.clear_content()
+            
     def get_cbx_items(self, column_name):
         object_list = self.controller.get_related_model_all(column_name)
         if object_list:

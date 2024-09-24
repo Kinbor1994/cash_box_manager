@@ -8,7 +8,7 @@ from views.base_form_widget import BaseFormWidget
 
 class TestGenForm(BaseFormWidget):
     
-    def __init__(self, title="Test de Classe", model=IncomeModel, controller=IncomeController(), instance=None, parent=None):
+    def __init__(self, title="Test de Classe", model=IncomeCategoryModel, controller=IncomeCategoryController(), instance=None, parent=None):
         super().__init__(title, model, controller, instance, parent)
     
         
