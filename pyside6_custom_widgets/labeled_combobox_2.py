@@ -77,14 +77,14 @@ class LabeledComboBox(QWidget):
 
     def get_value(self):
         """
-        Returns the current selected item text in the ComboBox.
+        Returns the current selected item associated userData in the ComboBox.
 
         Returns:
-            str: The selected item text.
+            any: The selected item associated userDate.
         """
-        return self.combobox.get_selected_text()
+        return self.combobox.get_selected_user_data()
     
-    def set_value(self, text:str):
+    def set_value(self, text):
         """
         Sets the current text of the ComboBox.
 

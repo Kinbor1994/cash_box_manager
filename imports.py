@@ -1,5 +1,5 @@
 from PySide6.QtCore import Qt, QDate, QSize, Signal, QEvent, QTimer
-from PySide6.QtGui import QIcon, QPixmap, QAction, QColor
+from PySide6.QtGui import QIcon, QPixmap, QAction, QColor, QCloseEvent
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,

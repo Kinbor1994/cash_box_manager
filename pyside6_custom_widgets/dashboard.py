@@ -6,10 +6,10 @@ from imports import (
 
 import qtawesome as qta
 from qt_material import apply_stylesheet
-from pyside6_custom_widgets.menubar import MenuBar
-from pyside6_custom_widgets.search_bar import SearchBar
-from pyside6_custom_widgets.sidebar import SideBar
-from pyside6_custom_widgets.content import Content
+from pyside6_custom_widgets import MenuBar
+from pyside6_custom_widgets import SearchBar
+from pyside6_custom_widgets import SideBar
+from pyside6_custom_widgets import Content
 from utils.qss_file_loader import load_stylesheet
 
 
@@ -83,6 +83,12 @@ class Dashboard(QMainWindow):
             title (str): The title of the page.
         """
         self.content.add_page(page_widget, title)
+        
+    def set_current_page_by_index(self, index):
+        self.content.set_current_page_by_index(index)
+        
+    def set_current_page(self, page_widget):
+        self.content.set_current_page(page_widget)
         
     def set_style(self, style_or_theme):
         """

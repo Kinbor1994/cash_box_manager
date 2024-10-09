@@ -15,9 +15,10 @@ if __name__ == "__main__":
             #     if column.info.get("editable",False) == "false":
             #         print(f"{column.info.get("editable")}")
             # print(c.category)
-            items = controller.get_related_model_all("category_id")
-            for elm in items:
-                print(f"{elm.id} - {elm.title}")
+            items = controller.get_column_headers()
+            print(items)
+            # for elm in items:
+            #     print(f"{elm.id} - {elm.title}")
         except RecordNotFoundError as e:
             print(f"Error: {e}")  # Affiche uniquement le message d'erreur
         except Exception as e:

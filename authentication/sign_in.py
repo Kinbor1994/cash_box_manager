@@ -28,7 +28,8 @@ class SignIn(QDialog):
         self.controller = UserController()
         self.setup_ui()
         self.setup_connection()
-        apply_stylesheet(self, theme='dark_amber.xml')
+        #apply_stylesheet(self, theme='dark_amber.xml')
+        apply_stylesheet(self, theme="default_light.xml")
 
     def setup_ui(self):
         """

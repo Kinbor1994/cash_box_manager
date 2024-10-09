@@ -39,14 +39,15 @@ class LabeledLineEdit(QWidget):
         self.layout.setSpacing(2)
         if on_change_callback:
             self.on_change_callback = on_change_callback
-            
+        
+        self.input_type = input_type
         # Create the custom Label and LineEdit widgets
         self.label = Label(label_text)
         self.line_edit = LineEdit(
             placeholder_text=placeholder_text,
             required=required,
             validation_func=validation_func,
-            input_type=input_type,
+            input_type=self.input_type,
             error_message=error_message,
             on_text_changer_func=on_change_callback,
             custom_style=custom_style,
@@ -77,14 +78,14 @@ class LabeledLineEdit(QWidget):
         """
         return self.line_edit.get_text()
     
-    def set_value(self, text:str):
+    def set_value(self, text):
         """
         Sets the text of the LineEdit.
 
         Args:
-            text (str): The text to set in the LineEdit.
+            text: The text to set in the LineEdit.
         """
-        self.line_edit.line_edit.setText(text)
+        self.line_edit.line_edit.setText(str(text))
         
     def set_text(self, text):
         """
@@ -131,7 +132,7 @@ if __name__ == "__main__":
 
     # Example of a labeled line edit
     labeled_line_edit = LabeledLineEdit("Username:", placeholder_text="Enter your username", required=True)
-    labeled_line_edit2= LabeledLineEdit("First Name:", placeholder_text="Enter your first name", required=True)
+    labeled_line_edit2= LabeledLineEdit("First Name:", placeholder_text="Enter your first name", required=True, input_type="numeric")
     labeled_line_edit.set_value("Bonjour")
     btn = Button(text="Submit")
     btn2 = Button(text="Cancel",theme_color="danger")

@@ -86,7 +86,7 @@ class LabeledDateEdit(QWidget):
         Args:
             date (QDate): The date to set.
         """
-        self.date_edit.date_edit.setDate(date)
+        self.date_edit.date_edit.setDate(QDate(date.year, date.month, date.day))
         
     def set_date(self, date):
         """

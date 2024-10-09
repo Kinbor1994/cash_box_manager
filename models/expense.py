@@ -5,10 +5,9 @@ from sqlalchemy.orm import relationship
 from database.database import Base
 from models import BaseModel
 
+class ExpenseCategoryModel(BaseModel):
 
-class IncomeCategoryModel(BaseModel):
-
-    __tablename__ = "income_categories"
+    __tablename__ = "expense_categories"
     __verbose_name__ = "Catégorie"
 
     title = Column(
@@ -24,8 +23,8 @@ class IncomeCategoryModel(BaseModel):
         },
     )
 
-    incomes: Mapped[list["IncomeModel"]] = relationship(
-        "IncomeModel",
+    expenses: Mapped[list["ExpenseModel"]] = relationship(
+        "ExpenseModel",
         back_populates="category",
         lazy="subquery",
         cascade="all, delete-orphan",
@@ -35,14 +34,13 @@ class IncomeCategoryModel(BaseModel):
         return f"(id={self.id}, title={self.title})"
 
     def __repr__(self):
-        return f"<IncomeCategoryModel(id={self.id}, title={self.title})"
+        return f"<ExpenseCategoryModel(id={self.id}, title={self.title})"
+    
 
-
-class IncomeModel(BaseModel):
-
-    __tablename__ = "incomes"
-    __verbose_name__ = "Recette"
-
+class ExpenseModel(BaseModel):
+    __tablename__ = "expenses"
+    __verbose_name__ = "Dépense"
+    
     amount = Column(
         Float,
         nullable=False,
@@ -60,7 +58,7 @@ class IncomeModel(BaseModel):
     )
     category_id = Column(
         Integer,
-        ForeignKey("income_categories.id", ondelete="CASCADE", onupdate="CASCADE"),
+        ForeignKey("expense_categories.id", ondelete="CASCADE", onupdate="CASCADE"),
         nullable=False,
         info={
             "verbose_name": "Catégorie",
@@ -69,8 +67,8 @@ class IncomeModel(BaseModel):
         },
     )
 
-    category: Mapped["IncomeCategoryModel"] = relationship(
-        "IncomeCategoryModel", lazy="subquery", back_populates="incomes"
+    category: Mapped["ExpenseCategoryModel"] = relationship(
+        "ExpenseCategoryModel", lazy="subquery", back_populates="expenses"
     )
 
     def __str__(self):

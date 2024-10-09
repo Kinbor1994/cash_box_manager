@@ -7,9 +7,23 @@ QLabel {
 }
 
 QLabel[role="title"] {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
     color: #007bff;          
+}
+
+QLabel[class="card_title"] {
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #5c5757;   
+}
+QLabel[class="card_content"] {
+    font-family: "Cambria", "Segoe UI", Arial, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #000000;   
 }
 
 QLabel[role="page_title"] {
@@ -49,3 +63,4 @@ QLabel[class="warning"] {
 QLabel[class="info"] {
     color: #17a2b8;  
 }
+

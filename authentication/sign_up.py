@@ -35,7 +35,7 @@ class SignUp(QDialog):
         self.username_widget = LabeledLineEdit(label_text="Identifiant",placeholder_text="Saisissez votre identifiant...",error_message="Ce champ est obligatoire",required=True)
         self.password_widget = LabeledLineEdit(label_text="Mot de passe",placeholder_text="Saisissez votre mot de passe...",error_message="Ce champ est obligatoire", input_type="password", required=True)
         self.confirm_password_widget = LabeledLineEdit(label_text="Confirmer le mot de passe",placeholder_text="Confirmez votre mot de passe...",error_message="Ce champ est obligatoire", input_type="password", required=True)
-        self.secret_question_widget = LabeledComboBox(items_with_data=secret_questions,label_text="Question", placeholder="Sélectionnez une question...", required=True)
+        self.secret_question_widget = LabeledComboBox(items=secret_questions,label_text="Question", placeholder="Sélectionnez une question...", required=True)
         self.secret_answer_widget = LabeledLineEdit(label_text="Réponse",placeholder_text="Saisissez votre réponse...",error_message="Ce champ est obligatoire",required=True)
         self.submit_btn = Button(text="S'inscrire",icon_name="fa.sign-in",theme_color="primary")
         self.cancel_btn = Button(text="Fermer",icon_name="fa.sign-out",theme_color="danger")

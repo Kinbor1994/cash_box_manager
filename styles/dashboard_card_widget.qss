@@ -1,0 +1,6 @@
+QWidget {
+    background-color: #ffffff; /* White background like AdminLte cards */
+    border-radius: 8px; /* Rounded corners for the card effect */
+    border: 1px solid #d2d6de; /* Light grey border similar to AdminLte */
+    padding: 10px;
+}

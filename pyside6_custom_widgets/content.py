@@ -46,7 +46,7 @@ class Content(QWidget):
         # Add the wrapped page (with title) to the stacked widget
         self.stacked_widget.addWidget(page_wrapper)
 
-    def set_current_page(self, index):
+    def set_current_page_by_index(self, index):
         """
         Sets the current page to the specified index.
 
@@ -54,6 +54,15 @@ class Content(QWidget):
             index (int): The index of the page to display.
         """
         self.stacked_widget.setCurrentIndex(index)
+    
+    def set_current_page(self, page_widget):
+        """
+        Sets the current.
+
+        Args:
+            index (QWidget): The widget of the page to display.
+        """
+        self.stacked_widget.setCurrentWidget(page_widget)
 
 
 

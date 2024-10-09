@@ -2,22 +2,23 @@ from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError
 
 from database.database import session
-from controllers.base_controller import BaseController
+from controllers import BaseController
 
-from models.incomes import IncomeCategoryModel, IncomeModel
+from models import ExpenseCategoryModel, ExpenseModel
 
-class IncomeCategoryController(BaseController):
+class ExpenseCategoryController(BaseController):
     
     def __init__(self):
-        super().__init__(model=IncomeCategoryModel)
+        super().__init__(model=ExpenseCategoryModel)
         
-class IncomeController(BaseController):
+class ExpenseController(BaseController):
     
     def __init__(self):
-        super().__init__(model=IncomeModel)
-        
+        super().__init__(model=ExpenseModel)
+    
+    
     @property
-    def get_total_income(self):
+    def get_total_expense(self):
         
         try:
             total = session.query(func.sum(self.model.amount)).scalar()

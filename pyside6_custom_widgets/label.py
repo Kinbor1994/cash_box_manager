@@ -14,14 +14,14 @@ class Label(QLabel):
         theme_name (str, optional): CSS class name for styling (e.g., 'primary', 'danger').
     """
 
-    def __init__(self, text, icon_path=None, icon_name=None, theme_name="primary"):
+    def __init__(self, text, icon_path=None, icon_name=None, theme_name="primary", icon_color ="white"):
         super().__init__()
-        self.setup_label(text, icon_path, icon_name)
+        self.setup_label(text, icon_path, icon_name, icon_color)
         style = load_stylesheet("styles/label.qss")
-        self.setProperty("class", theme_name)
-        self.setStyleSheet(style)
+        self.set_property("class", theme_name)
+        self.set_style_sheet(style)
 
-    def setup_label(self, text, icon_path, icon_name):
+    def setup_label(self, text, icon_path, icon_name, icon_color):
         """
         Sets up the label with text and optional icon.
 
@@ -37,7 +37,7 @@ class Label(QLabel):
             self.setPixmap(icon.pixmap(24, 24))  # Set icon with fixed size
         elif icon_name:
             # Use QtAwesome to set the icon
-            icon = qta.icon(icon_name)
+            icon = qta.icon(icon_name, color=icon_color)
             self.setPixmap(icon.pixmap(24, 24))  # Set icon with fixed size
 
     def set_text(self, text):
@@ -57,3 +57,9 @@ class Label(QLabel):
             QLabel: The label widget.
         """
         return self
+
+    def set_property(self, name, value):
+        self.setProperty(name, value)
+    
+    def set_style_sheet(self, style):
+        self.setStyleSheet(style)

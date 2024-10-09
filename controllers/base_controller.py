@@ -191,7 +191,7 @@ class BaseController:
 
             session.delete(instance)
             session.commit()
-            self.action_logger.log('delete', user_id, self.model.__tablename__, id_)
+            self.action_logger.log('delete', user_id, self.model.__tablename__, id_, description=f"Deleted record with values {instance}")
             return True
         except RecordNotFoundError:
             session.rollback()
@@ -204,17 +204,20 @@ class BaseController:
     
     def get_all(self):
         """
-        Fetch all records.
+        Fetch all records with optional ordering.
 
         Returns:
-            A list of model instances.
+            A list of model instances, ordered if applicable.
         """
-        
         try:
-            if hasattr(self.model, 'query_ordered'):
-                query = self.model.query_ordered(session)
-            else:
-                query = session.query(self.model)
+            query = session.query(self.model)
+            
+            # Récupérer les colonnes avec 'order_column' dans leur 'info'
+            order_columns = self._get_order_columns()
+            # Appliquer l'ordre si des colonnes sont spécifiées
+            if order_columns:
+                query = query.order_by(*order_columns)
+
             return query.all()
         except SQLAlchemyError as e:
             raise
@@ -271,6 +274,41 @@ class BaseController:
         finally:
             session.close()
             
+    def get_related_model_item_by_id(self, foreign_key_column_name, _id):
+        
+        try:
+            related_model = self.get_related_model(foreign_key_column_name)
+            if related_model:
+                return session.query(related_model).outerjoin(self.model).filter(related_model.id==_id).first()
+        except SQLAlchemyError as e:
+            raise
+        finally:
+            session.close()
+            
+    # def get_column_headers_verbose_name(self):
+    #     column_headers = []
+    #     for column in self.model.__table__.columns:
+    #         column_header = column.info.get('verbose_name', column.name)
+    #         if column_header:
+    #             column_headers.append(column_header)
+                
+    #     return column_headers
+    
+    # def get_column_headers(self):
+    #     column_headers = []
+    #     for column in self.model.__table__.columns:
+    #         column_headers.append(column.name)
+                
+    #     return column_headers
+    
+    def _get_order_columns(self):
+        order_columns = []
+        for column in self.model.__table__.columns:
+            if column.info.get('order_column', False):
+                order_columns.append(column)
+                
+        return order_columns
+    
 class RecordNotFoundError(Exception):
     """Exception raised when a record is not found."""
     pass

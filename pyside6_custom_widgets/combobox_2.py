@@ -100,11 +100,9 @@ class ComboBox(QWidget):
                 label = item.title
                 user_data = item.id
             else:
-                # Fallback: assume item is a simple string and set None as userData
                 label = str(item)
                 user_data = None
 
-            # Add item to combobox with corresponding userData
             self.combobox.addItem(label, user_data)
 
         # Update the completer's model with the new items (only labels)
