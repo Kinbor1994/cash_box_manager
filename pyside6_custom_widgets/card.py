@@ -19,7 +19,7 @@ class DashboardCardWidget(QWidget):
     ):
         super().__init__(parent)
         self.setMinimumSize(250, 145)
-        self.setMaximumSize(300, 145)
+        self.setMaximumSize(350, 145)
         style = load_stylesheet("styles/dashboard_card_widget.qss")
         self.setStyleSheet(style)
         self.add_shadow()
@@ -32,7 +32,7 @@ class DashboardCardWidget(QWidget):
         icon_label = Label(
             text="", icon_name=icon_name, theme_name=theme_name, icon_color=icon_color
         )
-        icon_label.setFixedSize(40, 40)
+        icon_label.setFixedSize(45, 45)
 
         # Create title and content layout
         title_label = Label(text=title, theme_name=theme_name)

@@ -116,7 +116,7 @@ class ComboBox(QWidget):
         Returns:
             Any: The userData associated with the selected item.
         """
-        index = self.combobox.currentIndex()
+        index = self.combobox.findText(self.combobox.currentText())
         if index != -1:
             return self.combobox.itemData(index)  # Returns userData associated with the selected item
         return None  

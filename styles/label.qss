@@ -1,25 +1,25 @@
 QLabel {
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: "Lato", Arial, sans-serif;
     font-size: 14px;
     font-weight: bold;
-    padding: 2px 5px;
     border-radius: 3px;
 }
 
 QLabel[role="title"] {
-    font-size: 16px;
+    font-family: "Roboto", "Cambria", "Segoe UI", Arial, sans-serif;
+    font-size: 18px;
     font-weight: bold;
-    color: #007bff;          
+    color: #000000;          
 }
 
 QLabel[class="card_title"] {
     font-size: 16px;
     font-weight: bold;
     margin: 5px 0;
-    color: #5c5757;   
+    color: #3a393b;   
 }
 QLabel[class="card_content"] {
-    font-family: "Cambria", "Segoe UI", Arial, sans-serif;
+    font-family: "Roboto", "Cambria", "Segoe UI", Arial, sans-serif;
     font-size: 24px;
     font-weight: bold;
     margin: 5px 0;
@@ -27,20 +27,21 @@ QLabel[class="card_content"] {
 }
 
 QLabel[role="page_title"] {
-    font: 87 22pt "Roboto Black";
-    color: #0f037c;  
+    font-family: "Roboto", "Cambria", "Segoe UI", Arial, sans-serif;
+    font-size: 18px;
+    color: #010108;  
 }
 
 QLabel[class="primary"] {
-    color: #007bff;  
+    color: #0665ca;  
 }
 
 QLabel[class="secondary"] {
-    color: #6c757d;  
+    color: #303235;  
 }
 
 QLabel[class="light"] {
-    color: #f8f9fa;  
+    color: #ffffff;  
 }
 
 QLabel[class="dark"] {
@@ -49,18 +50,18 @@ QLabel[class="dark"] {
 
 
 QLabel[class="success"] {
-    color: #28a745;  
+    color: #06611b;  
 }
 
 QLabel[class="danger"] {
-    color: #dc3545;  
+    color: #b90a1c;  
 }
 
 QLabel[class="warning"] {
-    color: #ffc107;  
+    color: #e2ab05;  
 }
 
 QLabel[class="info"] {
-    color: #17a2b8;  
+    color: #056f80;  
 }
 

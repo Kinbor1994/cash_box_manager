@@ -26,7 +26,7 @@ class Content(QWidget):
         # Create a wrapper widget to hold the title and the page content
         page_wrapper = QWidget()
         page_layout = QVBoxLayout(page_wrapper)
-        page_layout.setContentsMargins(5, 5, 5, 5)  # No margins around the layout
+        page_layout.setContentsMargins(5, 5, 5, 5) 
 
         # Create the title label with a fixed width of 45 pixels
         title_label = QLabel(title)

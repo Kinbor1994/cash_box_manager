@@ -91,7 +91,7 @@ class SideBar(QWidget):
             layout.addWidget(sub_button_frame)
 
         # Set fixed width based on compact/full mode
-        sidebar.setFixedWidth(80 if compact else 200)
+        sidebar.setFixedWidth(80 if compact else 250)
         return sidebar
 
     def set_active_button(self, button):

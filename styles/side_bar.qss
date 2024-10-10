@@ -5,9 +5,11 @@ QWidget {
 
 
 QPushButton {
+    font-family: "Roboto", "Cambria", "Segoe UI", Arial, sans-serif;
     background-color: transparent; 
     color: white;                   
-    font-size: 16px;
+    font-size: 12px;
+    font-weight: bold;
     border: none;
     padding: 10px 15px;            
     text-align: left;               

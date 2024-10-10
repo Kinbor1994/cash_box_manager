@@ -1,5 +1,6 @@
+from PySide6.QtCharts import QChart, QChartView, QBarSet, QBarSeries, QValueAxis, QBarCategoryAxis, QPieSeries
 from PySide6.QtCore import Qt, QDate, QSize, Signal, QEvent, QTimer
-from PySide6.QtGui import QIcon, QPixmap, QAction, QColor, QCloseEvent
+from PySide6.QtGui import QPainter, QIcon, QPixmap, QAction, QColor, QCloseEvent, QFontDatabase
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,

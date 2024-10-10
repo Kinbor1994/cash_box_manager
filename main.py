@@ -2,17 +2,16 @@ from pathlib import Path
 
 from babel.numbers import format_currency
 from pyside6_custom_widgets.card import DashboardCardWidget
+from pyside6_custom_widgets.charts import BarChartWidget
 from pyside6_custom_widgets.dashboard import Dashboard
 
 from imports import (
     QWidget,
+    QFontDatabase,
     QVBoxLayout,
     QHBoxLayout,
     QTimer,
     Qt,
-    QIcon,
-    QSize,
-    QMessageBox,
 )
 from utils.utils import get_initial_balance, set_app_icon
 from controllers.income_controller import IncomeController
@@ -26,6 +25,9 @@ class MainWindow(Dashboard):
     def __init__(self):
         super().__init__(menus=self.setup_menu(), sidebar_buttons=self.setup_sidebar())
         self.setWindowTitle("Gestionnaire de caisse")
+        QFontDatabase.addApplicationFont("resources/fonts/Roboto-Regular.ttf")
+        QFontDatabase.addApplicationFont("fonts/Lato-Regular.ttf")
+        QFontDatabase.addApplicationFont("fonts/Helvetica Roman.ttf")
         apply_stylesheet(self, theme="default_light.xml")
         set_app_icon(self)
         self.setup_pages()
@@ -85,6 +87,11 @@ class MainWindow(Dashboard):
                 lambda: self.set_current_page_by_index(
                     self.get_pages_index["main_page_index"]
                 ),
+            ),
+            (
+                "Actualiser", 
+                "fa.refresh",
+                self.refresh_dashboard
             ),
             (
                 "Recettes",
@@ -180,9 +187,14 @@ class MainWindow(Dashboard):
         total_income = income_controller.get_total_income
         
         inital_balance = get_initial_balance().get("solde", "0.0")
+        
         main_widget = QWidget()
-        m_layout = QHBoxLayout()
-        m_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
+        m_layout = QVBoxLayout()
+        card_layout = QHBoxLayout()
+        card_layout.setContentsMargins(0, 0, 0, 0)
+        chart_layout = QHBoxLayout()
+        chart_layout.setContentsMargins(0, 0, 0, 0)
+        card_layout.setAlignment(Qt.AlignRight | Qt.AlignTop)
         
         self.initial_balance_card = DashboardCardWidget(
             title="Solde Initial",
@@ -208,11 +220,17 @@ class MainWindow(Dashboard):
             content=f"{format_currency(inital_balance+total_income-total_expense, currency="XOF",locale='fr_FR')}",
             icon_color="blue",
         )
-        m_layout.addWidget(self.initial_balance_card)
-        m_layout.addWidget(self.income_card)
-        m_layout.addWidget(self.expense_card)
-        m_layout.addWidget(self.balance_card)
-        m_layout.addStretch()
+        data = IncomeController().get_all()
+        bar_chart_widget = BarChartWidget(data=data, category_attr="date", value_attr="amount", title="Test", xlabel="Date", ylabel="Montant")
+        chart_layout.addWidget(bar_chart_widget)
+        
+        card_layout.addWidget(self.initial_balance_card)
+        card_layout.addWidget(self.income_card)
+        card_layout.addWidget(self.expense_card)
+        card_layout.addWidget(self.balance_card)
+        m_layout.addLayout(card_layout)
+        m_layout.addLayout(chart_layout)
+        #m_layout.addStretch()
         main_widget.setLayout(m_layout)
         return main_widget
 

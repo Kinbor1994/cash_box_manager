@@ -26,7 +26,7 @@ class SignUp(QDialog):
         self.setup_ui()
         self.setup_connections()
         
-        apply_stylesheet(self,theme="dark_teal.xml")
+        apply_stylesheet(self, theme="default_light.xml")
         
     def setup_ui(self):
         self.main_layout = QVBoxLayout()

@@ -1,6 +1,6 @@
 from sqlalchemy import Date, DateTime, Enum, Float, Integer, String
 
-from imports import QDialog, QVBoxLayout, QHBoxLayout, QFrame, QSpacerItem, QSizePolicy, QMessageBox, QWidget, Signal, QCloseEvent
+from imports import QDialog, QVBoxLayout, QHBoxLayout, QFrame, QSize, QGridLayout, QSpacerItem, QSizePolicy, QMessageBox, QWidget, Signal, QCloseEvent
 from pyside6_custom_widgets.button import Button
 from pyside6_custom_widgets.label import Label
 from pyside6_custom_widgets.labeled_combobox_2 import LabeledComboBox
@@ -9,13 +9,14 @@ from pyside6_custom_widgets.labeled_line_edit import LabeledLineEdit
 from pyside6_custom_widgets.table_widget import CustomTableWidget
 from utils.utils import  set_app_icon
 
+from qt_material import apply_stylesheet
 
 class BaseFormWidget(QDialog):
     
     def __init__(self, title="", model=None, controller=None, parent=None):
         super().__init__(parent)
         self.setWindowTitle(title)
-        self.setGeometry(100,100,448, 400)
+        apply_stylesheet(self, theme="default_light.xml")
         set_app_icon(self)
         self.title = title
         self.model = model
@@ -57,19 +58,59 @@ class BaseFormWidget(QDialog):
         self.submit_btn.clicked.connect(self.submit)
         
     def create_fields(self):
-        """
-        Dynamically create input fields based on the model attributes.
-        """
-        for column in self.model.__table__.columns:
-            if column.name == 'id':
-                continue 
+        # """
+        # Dynamically create input fields based on the model attributes.
+        # """
+        # for column in self.model.__table__.columns:
+        #     if column.name == 'id':
+        #         continue 
             
+        #     field_widget = self.create_field_widget(column)
+            
+        #     if field_widget:
+        #         field_widget.setObjectName(column.name)
+        #         self.fields.append(field_widget)
+        #         self.main_layout.addWidget(field_widget)
+        """
+        Dynamically create input fields based on the model attributes, ordered by tab_col_index.
+        If the number of fields exceeds 6, they are displayed in two columns.
+        If the number of fields exceeds 20, they are displayed in three columns.
+        """
+        # Trier les colonnes du modèle en fonction de leur 'tab_col_index'
+        columns = sorted(
+            [col for col in self.model.__table__.columns if col.name != 'id'],
+            key=lambda col: col.info.get('tab_col_index', 0)
+        )
+
+        # Déterminer le nombre de colonnes à afficher
+        total_fields = len(columns)
+        if total_fields > 20:
+            num_columns = 3
+        elif total_fields > 6:
+            num_columns = 2
+        else:
+            num_columns = 1
+
+        # Uses QGridLayout to dispose fields in columns
+        grid_layout = QGridLayout()
+        row = 0
+        col = 0
+
+        for column in columns:
             field_widget = self.create_field_widget(column)
-            
+
             if field_widget:
                 field_widget.setObjectName(column.name)
                 self.fields.append(field_widget)
-                self.main_layout.addWidget(field_widget)
+                grid_layout.addWidget(field_widget, row, col)
+
+                # Gérer le placement en colonnes
+                row += 1
+                if row >= total_fields // num_columns:
+                    row = 0
+                    col += 1
+
+        self.main_layout.addLayout(grid_layout)
 
     def create_field_widget(self, column):
         """
@@ -104,7 +145,6 @@ class BaseFormWidget(QDialog):
 
         return None
 
-
     def create_non_editable_field(self, column, verbose_name, required):
         """
         Create a non-editable field based on the column type.
@@ -136,11 +176,11 @@ class BaseFormWidget(QDialog):
         """
         Validates the fields dynamically and highlights any empty or invalid fields with a red border.
         """
-        all_valid = True
+        all_valid = []
         for field in self.fields:
-            all_valid = field.is_valid()
+            all_valid.append(field.is_valid())
         
-        return all_valid
+        return all(all_valid)
         
     def submit(self):
         """
@@ -237,6 +277,7 @@ class ListView(QWidget):
     reload_data_signal = Signal()
     def __init__(self, model=None, controller=None):
         super().__init__()
+        apply_stylesheet(self, theme="default_light.xml")
         self.controller = controller
         self.model = model
         self.custom_table = None
@@ -271,7 +312,7 @@ class ListView(QWidget):
         """
         Edits the data of a specific row by invoking the controller.
         """
-        edit_form = UpdateView(title=f"Modification d'une {self.model.__verbose_name__}", model=self.model, controller=self.controller, id=instance_id)
+        edit_form = UpdateView(title=f"Modification d'une entrée de {self.model.__verbose_name__}", model=self.model, controller=self.controller, id=instance_id)
         edit_form.refresh_signal.connect(self.refresh_data)
         edit_form.exec()
 
@@ -295,6 +336,6 @@ class ListView(QWidget):
             QMessageBox.critical(self, "Erreur", f"Error deleting instance: {e}")
             
     def create_instance(self):
-        create_form = CreateView(f"Ajouter une nouvelle {self.model.__verbose_name__}.", model=self.model, controller=self.controller)
+        create_form = CreateView(f"Ajouter une nouvelle entrée de {self.model.__verbose_name__}.", model=self.model, controller=self.controller)
         create_form.refresh_data_signal.connect(self.refresh_data)
         create_form.exec()

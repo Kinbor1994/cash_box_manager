@@ -91,7 +91,9 @@ class LabeledComboBox(QWidget):
         Args:
             text (str): A text to set as the combobox current text.
         """
-        self.combobox.combobox.setCurrentText(text)
+        index =  self.combobox.combobox.findText(text)
+        if index != -1: 
+            self.combobox.combobox.setCurrentIndex(index) 
         
     def set_items(self, items):
         """

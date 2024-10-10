@@ -6,7 +6,7 @@ class ActionButtonsWidget(QWidget):
         super().__init__()
         self.setFixedHeight(40)
         self.setFixedWidth(85)
-        self.modify_button = Button("",theme_color="primary",icon_name='fa5s.sync-alt')
+        self.modify_button = Button("",theme_color="primary",icon_name='fa.edit')
         self.delete_button = Button("",theme_color="danger",icon_name='fa5s.trash-alt')
         # Only connect the buttons if the callbacks exist
         if modify_callback:

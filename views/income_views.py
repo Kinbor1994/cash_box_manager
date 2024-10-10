@@ -1,5 +1,6 @@
 import sys
 
+from pyside6_custom_widgets.labeled_combobox_2 import LabeledComboBox
 from views.generic import CreateView, UpdateView, ListView
 from models import IncomeCategoryModel, IncomeModel
 from controllers import IncomeCategoryController, IncomeController
@@ -37,7 +38,7 @@ if __name__ == "__main__":
     from imports import QApplication
     app = QApplication([])
     
-    window = IncomeList()
+    window = CreateIncome()
     window.show()
     
     sys.exit(app.exec())

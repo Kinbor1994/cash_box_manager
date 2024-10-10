@@ -1,4 +1,5 @@
 import sys
+from imports import QSize
 
 from views.generic import CreateView, UpdateView, ListView
 from models import ExpenseCategoryModel, ExpenseModel
@@ -17,6 +18,7 @@ class ExpenseCategoryList(ListView):
     
     def __init__(self, model=ExpenseCategoryModel,controller=ExpenseCategoryController()):
         super().__init__(model, controller)
+    
         
 class CreateExpense(CreateView):
     

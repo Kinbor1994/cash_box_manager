@@ -32,7 +32,7 @@ class PasswordForget(QDialog):
         self.setup_ui()
         self.get_secret_question()
         self.setup_connection()
-        apply_stylesheet(self, theme='dark_amber.xml')
+        apply_stylesheet(self, theme="default_light.xml")
 
     def setup_ui(self):
         """
@@ -132,7 +132,7 @@ class PasswordForget(QDialog):
             self.secret_question = self.controller.get_secret_question(self.username)
             if self.secret_question:
                 self.secret_question_label.set_text(self.secret_question)
-                self.secret_question_label.setProperty("class","light")
+                self.secret_question_label.setProperty("class","dark")
         except Exception as e:
             raise e
     

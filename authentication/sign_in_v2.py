@@ -4,6 +4,7 @@ from pyside6_custom_widgets.signin import SignIn
 from main import MainWindow
 from imports import QSize, QMessageBox
 from utils.utils import set_app_icon
+from qt_material import apply_stylesheet
 
 class SignIn(SignIn):
     
@@ -12,6 +13,7 @@ class SignIn(SignIn):
         self.setGeometry(100,100,350, 220)
         self.setMinimumSize(QSize(350, 220))
         self.setMaximumSize(QSize(350, 220))
+        apply_stylesheet(self, theme="default_light.xml")
         set_app_icon(self)
         self.controller = UserController()
         self.setup_connection()

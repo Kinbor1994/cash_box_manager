@@ -14,7 +14,7 @@ class Label(QLabel):
         theme_name (str, optional): CSS class name for styling (e.g., 'primary', 'danger').
     """
 
-    def __init__(self, text, icon_path=None, icon_name=None, theme_name="primary", icon_color ="white"):
+    def __init__(self, text, icon_path=None, icon_name=None, theme_name="dark", icon_color ="white"):
         super().__init__()
         self.setup_label(text, icon_path, icon_name, icon_color)
         style = load_stylesheet("styles/label.qss")
