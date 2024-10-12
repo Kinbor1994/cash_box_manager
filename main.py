@@ -2,7 +2,7 @@ from pathlib import Path
 
 from babel.numbers import format_currency
 from pyside6_custom_widgets.card import DashboardCardWidget
-from pyside6_custom_widgets.charts import BarChartWidget
+from pyside6_custom_widgets.charts import BarChartWidget, PieChartWidget
 from pyside6_custom_widgets.dashboard import Dashboard
 
 from imports import (
@@ -223,6 +223,9 @@ class MainWindow(Dashboard):
         data = IncomeController().get_all()
         bar_chart_widget = BarChartWidget(data=data, category_attr="date", value_attr="amount", title="Test", xlabel="Date", ylabel="Montant")
         chart_layout.addWidget(bar_chart_widget)
+        
+        pie_chart_widget = PieChartWidget(data=data, title="test", category_attr="date", value_attr="amount")
+        chart_layout.addWidget(pie_chart_widget)
         
         card_layout.addWidget(self.initial_balance_card)
         card_layout.addWidget(self.income_card)

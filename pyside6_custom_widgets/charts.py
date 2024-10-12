@@ -90,67 +90,66 @@ class BarChartWidget(QWidget):
         self.update_categories()
         self.chart_view.repaint()
         
-#TODO Revoir cette partie
 class PieChartWidget(QWidget):
+    """A custom widget for displaying pie charts.
+
+    This widget visualizes data as a pie chart, allowing customization of the chart's title.
+
+    Args:
+        data (list): The data to be displayed in the chart.
+        title (str, optional): The title of the chart. Defaults to "My Title".
+        parent (QWidget, optional): The parent widget of this widget. Defaults to None.
     """
-    A customizable and reusable pie chart widget using PySide6's QChart.
 
-    Attributes:
-        chart (QChart): The chart object that holds the pie series and displays the data.
-        chart_view (QChartView): The view that renders the chart.
-        series (QPieSeries): The pie series that represents the data.
-    """
-
-    def __init__(self, parent=None):
-        """
-        Initializes the PieChartWidget.
-
-        Args:
-            parent (QWidget, optional): The parent widget of this pie chart widget. Defaults to None.
-        """
+    def __init__(self, data, title="My Title",  category_attr="category", value_attr='value', parent=None):
+        """Initialize the PieChartWidget with the provided data and title."""
         super().__init__(parent)
-        self.chart = QChart()
-        self.chart_view = QChartView(self.chart)
+        self.data = data
+        self.title = title
+        self.category_attr = category_attr
+        self.value_attr = value_attr
+        self.setup_ui()
+
+    def setup_ui(self):
+        """Set up the user interface for the pie chart widget."""
         self.series = QPieSeries()
-        
-        self.chart.addSeries(self.series)
-        self.chart.setTitle("Pie Chart")
-        self.chart.legend().setVisible(True)
-        self.chart.legend().setAlignment(Qt.AlignBottom)
+        for instance in self.data:
+            self.series.append(str(getattr(instance, self.category_attr)), getattr(instance, self.value_attr))
+
+        chart = QChart()
+        chart.addSeries(self.series)
+        chart.setTitle(self.title)
+        chart.setAnimationOptions(QChart.SeriesAnimations)
+
+        for slice in self.series.slices():
+            slice.setLabelVisible(True)
+
+        self.chart_view = QChartView(chart)
+        self.chart_view.setRenderHint(QPainter.Antialiasing)
 
         layout = QVBoxLayout()
         layout.addWidget(self.chart_view)
         self.setLayout(layout)
 
-    def update_data(self, data_dict):
-        """
-        Updates the pie chart with new data.
+    def update_pie_chart_data(self):
+        """Update the data in the pie chart with the current data."""
+        self.series.clear()
+
+        for instance in self.data:
+            self.series.append(str(getattr(instance, self.category_attr)), getattr(instance, self.value_attr))
+
+    def update_slices(self):
+        """Update the slices in the pie chart to make labels visible."""
+        for slice in self.series.slices():
+            slice.setLabelVisible(True)
+
+    def update_chart(self, new_data):
+        """Update the pie chart with new data and refresh the display.
 
         Args:
-            data_dict (dict): A dictionary with category labels as keys and numerical values as values.
+            new_data (list): The new data to be used for the chart.
         """
-        self.series.clear()
-        for category, value in data_dict.items():
-            self.series.append(category, value)
-
-        self.chart.setTitle("Pie Chart Updated")
-
-if __name__ == "__main__":
-    import sys
-    from imports import QApplication
-    app = QApplication([])
-    win = QWidget()
-    layout = QVBoxLayout()
-    # Example data for BarChartWidget
-    bar_chart_widget = BarChartWidget()
-    data = {"Category 1": 10, "Category 2": 15, "Category 3": 8}
-    bar_chart_widget.update_data(data)
-    layout.addWidget(bar_chart_widget)
-    # Example data for PieChartWidget
-    pie_chart_widget = PieChartWidget()
-    data = {"Apples": 30, "Oranges": 40, "Bananas": 20}
-    pie_chart_widget.update_data(data)
-    layout.addWidget(pie_chart_widget)
-    win.setLayout(layout)
-    win.show()
-    sys.exit(app.exec())
+        self.data = new_data
+        self.update_pie_chart_data()
+        self.update_slices()
+        self.chart_view.repaint()
