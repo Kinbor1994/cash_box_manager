@@ -17,7 +17,7 @@ class ResetPassword(QDialog):
 
     def __init__(self, username:str):
         super().__init__()
-        self.setWindowTitle("Changement de mot de passe")
+        self.setWindowTitle("CASH BOX MANAGER BY BOREL")
         set_app_icon(self)
         self.setGeometry(100,100,400, 220)
         self.setMinimumSize(QSize(400, 220))

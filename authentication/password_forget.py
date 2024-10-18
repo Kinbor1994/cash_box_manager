@@ -22,7 +22,7 @@ class PasswordForget(QDialog):
 
     def __init__(self, username:str):
         super().__init__()
-        self.setWindowTitle("Mot de passe oublié")
+        self.setWindowTitle("CASH BOX MANAGER BY BOREL")
         set_app_icon(self)
         self.setGeometry(100,100,400, 300)
         self.setMinimumSize(QSize(400, 300))

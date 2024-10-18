@@ -1,0 +1,22 @@
+
+QTableWidget {
+    font-family: "Times New Roman", "Cambria", "Segoe UI", Arial, sans-serif;
+    font-size: 14px;
+    background-color: #ffffff;
+}
+QHeaderView::section {
+    font-family: "Roboto", "Cambria", "Segoe UI", Arial, sans-serif;
+    font-weight: bold;
+    font-size: 12px;
+    background-color: black;  
+    color: white;  
+    padding: 4px;
+    border: 1px solid gray;
+}
+QTableWidget::item {
+    font-family: "Times New Roman";
+    font-size: 14px;
+}
+QTableView::item:alternate { 
+    background-color: #ebe6e6;
+}

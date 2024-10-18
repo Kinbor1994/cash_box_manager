@@ -18,6 +18,13 @@ QLabel[class="card_title"] {
     margin: 5px 0;
     color: #3a393b;   
 }
+
+QLabel[class="content"] {
+    font-family: "Roboto", "Cambria", "Segoe UI", Arial, sans-serif;
+    font-size: 12px;
+    color: #3a393b;   
+}
+
 QLabel[class="card_content"] {
     font-family: "Roboto", "Cambria", "Segoe UI", Arial, sans-serif;
     font-size: 24px;

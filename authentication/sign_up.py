@@ -16,7 +16,7 @@ class SignUp(QDialog):
     
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Inscription")
+        self.setWindowTitle("CASH BOX MANAGER BY BOREL")
         set_app_icon(self)
         self.setGeometry(100,100,500, 480)
         self.setMinimumSize(QSize(500, 480))

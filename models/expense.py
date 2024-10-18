@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime
+from sqlalchemy import Column, Date, Integer, String, Float, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 
 from database.database import Base
@@ -47,7 +47,7 @@ class ExpenseModel(BaseModel):
         info={"verbose_name": "Montant", "column_type": "numeric", "tab_col_index": 4},
     )
     date = Column(
-        DateTime,
+        Date,
         nullable=False,
         info={"verbose_name": "Date", "order_column": True, "tab_col_index": 2},
     )

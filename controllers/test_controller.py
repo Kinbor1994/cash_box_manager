@@ -1,11 +1,12 @@
 
 from controllers.base_controller import BaseController, RecordNotFoundError
 from models.incomes import IncomeCategoryModel, IncomeModel
-
-class IncomeController(BaseController):
+from controllers.income_controller import IncomeController
+from sqlalchemy.engine.row import Row
+# class IncomeController(BaseController):
     
-    def __init__(self):
-        super().__init__(IncomeModel)
+#     def __init__(self):
+#         super().__init__(IncomeModel)
         
 if __name__ == "__main__":
         controller = IncomeController()
@@ -15,10 +16,10 @@ if __name__ == "__main__":
             #     if column.info.get("editable",False) == "false":
             #         print(f"{column.info.get("editable")}")
             # print(c.category)
-            items = controller.get_column_headers()
-            print(items)
-            # for elm in items:
-            #     print(f"{elm.id} - {elm.title}")
+            items = controller.get_filter_by_category_id(1)
+            for elm in items:
+                print(isinstance(elm, Row))
+                print(f"{elm}")
         except RecordNotFoundError as e:
             print(f"Error: {e}")  # Affiche uniquement le message d'erreur
         except Exception as e:

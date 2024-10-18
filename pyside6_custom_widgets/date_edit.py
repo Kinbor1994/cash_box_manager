@@ -67,6 +67,8 @@ class DateEdit(QWidget):
         # Set minimum and maximum dates if provided
         if self.min_date:
             self.date_edit.setMinimumDate(self.min_date)
+        else:
+            self.date_edit.setDate(QDate.currentDate())
         if self.max_date:
             self.date_edit.setMaximumDate(self.max_date)
 
@@ -190,7 +192,7 @@ class DateEdit(QWidget):
         if self.min_date:
             self.date_edit.setDate(self.min_date)
         else:
-            self.date_edit.setDate(QDate(2000, 1, 1))
+            self.date_edit.setDate(QDate.currentDate())
             
 if __name__ == "__main__":
     from imports import QApplication, QMainWindow

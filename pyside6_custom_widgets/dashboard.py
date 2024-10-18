@@ -1,7 +1,7 @@
 import sys
 
 from imports import (
-    QApplication, QMainWindow, QWidget, QHBoxLayout, QLabel, Qt
+    QApplication, QMainWindow, QWidget, QHBoxLayout, QVBoxLayout, QLabel, Qt
 )
 
 import qtawesome as qta
@@ -10,6 +10,7 @@ from pyside6_custom_widgets import MenuBar
 from pyside6_custom_widgets import SearchBar
 from pyside6_custom_widgets import SideBar
 from pyside6_custom_widgets import Content
+from pyside6_custom_widgets import Footer
 from utils.qss_file_loader import load_stylesheet
 
 
@@ -52,10 +53,14 @@ class Dashboard(QMainWindow):
         # Create central widget and layout
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
-        main_layout = QHBoxLayout(central_widget)
+        central_layout = QVBoxLayout(central_widget)
+        central_layout.setContentsMargins(0, 0, 0, 0)
+        central_layout.setSpacing(0)
+        main_layout = QHBoxLayout()
+        footer_layout = QHBoxLayout()
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
-
+        
         # Create and add MenuBar, SearchBar, SideBar, and Content
         self.menu_bar = MenuBar(menus=self.menus)
         self.search_bar = SearchBar()
@@ -68,9 +73,15 @@ class Dashboard(QMainWindow):
         main_layout.addWidget(self.content)
         self.setMenuBar(self.menu_bar)
 
+        # Add Footer to the Dashboard
+        self.footer = Footer("© 2024 KSBDEV - All rights reserved")
+        footer_layout.addWidget(self.footer)
+    
         # Connect pushMenu button to toggle sidebar
         self.menu_bar.connect_push_menu(self.side_bar.toggle_sidebar)
         
+        central_layout.addLayout(main_layout)
+        central_layout.addLayout(footer_layout)
         # Apply the appropriate style (QSS or Material)
         self.set_style(style_or_theme)
 
@@ -180,7 +191,31 @@ if __name__ == "__main__":
     sidebar_buttons = [
         ("Home", "fa.home", main_action, [("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
         ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("Settings", 'fa.cog', bonjour,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
+        ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)]),
         ("About", 'fa.info-circle', main_action,[("Sub1", 'fa.star', sub_action_1), ("Sub2", 'fa.heart', sub_action_2)])
+        
+        
     ]
 
 

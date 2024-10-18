@@ -295,7 +295,7 @@ class ListView(QWidget):
             edit_callback=self.edit_row,
             delete_callback=self.delete_row,
             create_command=self.create_instance,
-            enable_pagination=True,
+            enable_pagination=False,
             items_per_page=10
         )
 

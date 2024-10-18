@@ -20,7 +20,7 @@ class SignIn(QDialog):
 
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Connection")
+        self.setWindowTitle("CASH BOX MANAGER BY BOREL")
         set_app_icon(self)
         self.setGeometry(100,100,400, 350)
         self.setMinimumSize(QSize(400, 350))

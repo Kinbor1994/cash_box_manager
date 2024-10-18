@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+import shutil
 from imports import QIcon
 
 config_file = Path("config.json")
@@ -24,6 +25,26 @@ secret_questions = [
     ('Quel est le prénom de votre grand-parent préféré ?', 15)
 ]
 
+months = [
+    "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+    "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Decembre"
+]
+
+def get_month_name(month_number: int) -> str:
+    """
+    Returns the name of the month corresponding to the given month number.
+
+    Args:
+        `month_number (int):` The number of the month (1 to 12).
+
+    Returns:
+        str: The name of the month, or "Invalid month number" if the number is not between 1 and 12.
+    """
+    if 1 <= month_number <= 12:
+        return months[month_number - 1]
+    else:
+        return "Invalid month number"
+    
 def set_app_icon(self):
         icon_path = Path("resources/icons/icon_3.ico")  
         self.setWindowIcon(QIcon(str(icon_path)))
@@ -72,3 +93,14 @@ def set_init_balance_data(value:float):
     
     with init_solde_file.open('w') as f:
         json.dump(config, f)
+        
+def save_database():
+    
+    # Chemin vers la base de données originale
+    source = 'db.db'
+
+    # Chemin vers la destination de la sauvegarde
+    destination = 'backup_database.db'
+
+    # Copier le fichier de base de données pour créer une sauvegarde
+    shutil.copyfile(source, destination)

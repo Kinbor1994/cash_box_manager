@@ -1,7 +1,5 @@
-from imports import QWidget, QVBoxLayout, QPushButton, QSize, Qt, QFrame
-
+from imports import QWidget, QVBoxLayout, QPushButton, QSize, Qt, QFrame, QScrollArea
 import qtawesome as qta
-
 from utils.qss_file_loader import load_stylesheet
 
 class SideBar(QWidget):
@@ -21,10 +19,19 @@ class SideBar(QWidget):
                                 Example: [("Home", 'fa.home', some_function, [("Sub1", "fa.heart", sub1_func), ...]), ...]
         """
         super().__init__()
-
-        self.layout = QVBoxLayout(self)
-        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.setMinimumWidth(80)
+        self.setMaximumWidth(250)
         self.active_button = None
+
+        # Create a scrollable area for the sidebar
+        self.scroll_area = QScrollArea()
+        self.scroll_area.setWidgetResizable(True)
+
+        # Create the container widget for the sidebar content
+        sidebar_content = QWidget()
+        self.layout = QVBoxLayout(sidebar_content)
+        self.layout.setContentsMargins(0, 0, 0, 0)
+
         # Create compact and full sidebars
         self.compact_sidebar = self.create_sidebar(compact=True, buttons=buttons)
         self.full_sidebar = self.create_sidebar(compact=False, buttons=buttons)
@@ -33,6 +40,16 @@ class SideBar(QWidget):
         self.layout.addWidget(self.compact_sidebar)
         self.layout.addWidget(self.full_sidebar)
         self.compact_sidebar.hide()
+
+        # Set the sidebar content as the scroll area's widget
+        self.scroll_area.setWidget(sidebar_content)
+
+        # Set the main layout of the SideBar widget
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0)
+        main_layout.addWidget(self.scroll_area)
+
+        # Load the stylesheet for styling the sidebar
         self.setStyleSheet(load_stylesheet("styles/side_bar.qss"))
 
     def create_sidebar(self, compact=False, buttons=[]):
@@ -66,7 +83,7 @@ class SideBar(QWidget):
             if command:
                 button.clicked.connect(command)
             button.clicked.connect(lambda _, b=button: self.set_active_button(b))
-            
+
             # Create a frame to hold sub-buttons
             sub_button_frame = QFrame()
             sub_button_layout = QVBoxLayout(sub_button_frame)
@@ -86,7 +103,7 @@ class SideBar(QWidget):
 
             # Toggle visibility of sub-buttons on main button click
             button.clicked.connect(lambda _, f=sub_button_frame: f.setVisible(not f.isVisible()))
-            
+
             layout.addWidget(button)
             layout.addWidget(sub_button_frame)
 
@@ -105,13 +122,23 @@ class SideBar(QWidget):
         button.setStyleSheet("background-color: #1abc9c; color: white; font-weight: bold;")
         
         self.active_button = button
-        
+
     def toggle_sidebar(self):
         """
         Toggles between compact and full sidebar views.
+        Updates the content of the scroll area to reflect the current sidebar state.
         """
-        self.full_sidebar.setVisible(not self.full_sidebar.isVisible())
-        self.compact_sidebar.setVisible(not self.compact_sidebar.isVisible())
+        if self.full_sidebar.isVisible():
+            # Switch to compact sidebar
+            self.full_sidebar.hide()
+            self.compact_sidebar.show()
+            self.setFixedWidth(80)  
+        else:
+            # Switch to full sidebar
+            self.compact_sidebar.hide()
+            self.full_sidebar.show()
+            self.setFixedWidth(250)  
+
 
 if __name__ == "__main__":
     from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QWidget
