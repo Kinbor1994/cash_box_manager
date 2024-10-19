@@ -11,11 +11,6 @@ from sqlalchemy.engine.row import Row
 if __name__ == "__main__":
         controller = IncomeController()
         try:
-            # c = controller.get_by_id(1)
-            # for column in IncomeModel.__table__.columns:
-            #     if column.info.get("editable",False) == "false":
-            #         print(f"{column.info.get("editable")}")
-            # print(c.category)
             items = controller.get_filter_by_category_id(1)
             for elm in items:
                 print(isinstance(elm, Row))

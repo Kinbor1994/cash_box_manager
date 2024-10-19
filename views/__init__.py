@@ -10,4 +10,3 @@ from .expense_views import ExpenseCategoryList as ExpenseCategoryList
 from .expense_views import CreateExpense as CreateExpense
 from .expense_views import UpdateExpense as UpdateExpense
 from .expense_views import ExpenseList as ExpenseList
-from .config_views import ConfigForm as ConfigForm

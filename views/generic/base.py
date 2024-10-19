@@ -58,19 +58,6 @@ class BaseFormWidget(QDialog):
         self.submit_btn.clicked.connect(self.submit)
         
     def create_fields(self):
-        # """
-        # Dynamically create input fields based on the model attributes.
-        # """
-        # for column in self.model.__table__.columns:
-        #     if column.name == 'id':
-        #         continue 
-            
-        #     field_widget = self.create_field_widget(column)
-            
-        #     if field_widget:
-        #         field_widget.setObjectName(column.name)
-        #         self.fields.append(field_widget)
-        #         self.main_layout.addWidget(field_widget)
         """
         Dynamically create input fields based on the model attributes, ordered by tab_col_index.
         If the number of fields exceeds 6, they are displayed in two columns.
@@ -91,7 +78,6 @@ class BaseFormWidget(QDialog):
         else:
             num_columns = 1
 
-        # Uses QGridLayout to dispose fields in columns
         grid_layout = QGridLayout()
         row = 0
         col = 0

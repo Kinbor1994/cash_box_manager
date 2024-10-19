@@ -7,7 +7,6 @@ from imports import QIcon
 current_period_id_file = Path("current_period_data.ksb")
 
 config_file = Path("config.json")
-init_solde_file = Path("initial_balance.json")
 
 secret_questions = [
     ('Quel est le nom de votre premier animal de compagnie ?', 1),
@@ -57,12 +56,6 @@ def read_config_file_data():
         with config_file.open('r') as f:
             data = json.load(f)
         return data
-
-def get_initial_balance():
-    if init_solde_file.exists():
-        with init_solde_file.open('r') as f:
-            data = json.load(f)
-        return data
     
 def save_config_data(value_1:str, value_2:str):
     """
@@ -81,21 +74,6 @@ def save_config_data(value_1:str, value_2:str):
     with config_file.open('w') as f:
         json.dump(config, f)
         
-def set_init_balance_data(value:float):
-    """
-    Set the initial balance data to the init file.
-    
-    Args:
-        `value` (float): amount value
-    """
-
-    config = {
-        "solde": value,
-    }
-    
-    with init_solde_file.open('w') as f:
-        json.dump(config, f)
-        
 def save_database():
     
     # Chemin vers la base de données originale
@@ -112,7 +90,7 @@ def write_id_to_file(id_value: str):
     Write the given ID to a .ksb file.
 
     Args:
-        id_value (int): The ID to be written to the file.
+        id_value (str): The ID to be written to the file.
     
     Raises:
         ValueError: If the ID value is empty.
@@ -132,7 +110,6 @@ def write_id_to_file(id_value: str):
         raise io_err
     except Exception as e:
         raise e
-
 
 def read_id_from_file() -> int:
     """
@@ -158,6 +135,7 @@ def read_id_from_file() -> int:
         raise io_err
     except Exception as e:
         raise e
+
 
 if __name__ == "__main__":
     # Example usage

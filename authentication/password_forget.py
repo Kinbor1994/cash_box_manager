@@ -94,7 +94,7 @@ class PasswordForget(QDialog):
                 field.line_edit.setStyleSheet("border: 2px solid red;")
                 all_valid = False
             else:
-                field.line_edit.setStyleSheet("")  # Reset to default
+                field.line_edit.setStyleSheet("")  
 
         return all_valid
 

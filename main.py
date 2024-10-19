@@ -24,12 +24,12 @@ from views import (
     IncomeList,
     ExpenseCategoryList,
     ExpenseList,
-    ConfigForm,
 )
 from qt_material import apply_stylesheet
 
 from views.about_us import AboutUs
 from views.manage_periodes_views import CashBoxPeriodList
+from views.save_database_view import DatabaseManager
 
 
 class MainWindow(Dashboard):
@@ -54,6 +54,7 @@ class MainWindow(Dashboard):
                 [
                     ("Fermer", self.close),
                     ("Actualiser", self.refresh_dashboard),
+                    ("Sauvegarder/Restaurer", self.show_db_manager)
                 ],
             ),
             (
@@ -172,13 +173,10 @@ class MainWindow(Dashboard):
         self.signin_form.show()
         self.close()
 
-    def open_initial_balance_form(self):
-        form = ConfigForm()
-        form.exec()
-
     def setup_pages(self):
+        current_period = self.cash_box_perid_controller.get_current_period()
         self.main_widget = self.setup_main_page()
-        self.add_content_page(self.main_widget, "Analytics Dashboard")
+        self.add_content_page(self.main_widget, f"Analytics Dashboard - (Exercice du {current_period.start_date.strftime("%d/%m/%Y") if current_period else "--/--/----"} au {current_period.end_date.strftime("%d/%m/%Y") if current_period else "--/--/----"})")
         self.cash_box_period_widget = CashBoxPeriodList()
         self.add_content_page(
             self.cash_box_period_widget,
@@ -312,6 +310,10 @@ class MainWindow(Dashboard):
 
     def show_about_us(self):
         form = AboutUs()
+        form.exec()
+        
+    def show_db_manager(self):
+        form = DatabaseManager()
         form.exec()
         
     @property
