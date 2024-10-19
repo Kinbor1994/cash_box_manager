@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 import shutil
 from imports import QDialog, QWidget, QVBoxLayout, QFileDialog, QMessageBox
 
@@ -34,7 +35,7 @@ class DatabaseManager(QDialog):
         if destination_folder:
             try:
                 # Assure-toi que le chemin de la base de données est correct
-                db_path = "database/db.db"
+                db_path = Path(__file__).parent.parent / "database/db.db"
                 backup_path = os.path.join(destination_folder, "database_backup.db")
                 shutil.copy(db_path, backup_path)
 
@@ -52,7 +53,7 @@ class DatabaseManager(QDialog):
         if backup_file:
             try:
                 # Assure-toi que le chemin de la base de données est correct
-                db_path = "database/db.db"
+                db_path = Path(__file__).parent.parent / "database/db.db"
                 shutil.copy(backup_file, db_path)
 
                 QMessageBox.information(self, "Restore Success", 
