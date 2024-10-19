@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from database.database import session
 from models.audit_model import AuditLog
 from models.cash_box_period import CashBoxPeriod
-from utils.utils import read_config_file_data
+from utils.utils import read_config_file_data, read_id_from_file
 
 # Configurer le logger pour capturer les erreurs SQLAlchemy
 logging.basicConfig(
@@ -92,7 +92,8 @@ class BaseController:
             The current CashBoxPeriod instance, or None if no period is active.
         """
         try:
-            current_period = session.query(CashBoxPeriod).filter(CashBoxPeriod.is_open == 'Ouvert').first()
+            current_period_id = read_id_from_file()
+            current_period = session.query(CashBoxPeriod).filter_by(id=current_period_id).first()
             return current_period
         except SQLAlchemyError as e:
             logger.error(f"Error retrieving current cash box period: {e}")
@@ -259,7 +260,7 @@ class BaseController:
                 start_date = current_period.start_date
                 end_date = current_period.end_date
                 if self._hasattr_date():
-                    query = query.filter(self.model.date.between(start_date, end_date))
+                    query = query.filter(self.model.date.between(start_date, end_date+timedelta(days=1)))
 
             # Récupérer les colonnes avec 'order_column' dans leur 'info'
             order_columns = self._get_order_columns()
@@ -285,7 +286,14 @@ class BaseController:
         """
 
         try:
+            current_period = self.get_current_period()
             query = session.query(self.model)
+            if current_period:
+                start_date = current_period.start_date
+                end_date = current_period.end_date
+                if self._hasattr_date():
+                    query = query.filter(self.model.date.between(start_date, end_date+timedelta(days=1)))
+            
             for key, value in filters.items():
                 if hasattr(self.model, key):
                     query = query.filter(getattr(self.model, key) == value)
@@ -297,12 +305,14 @@ class BaseController:
 
     def get_filter_by_category_id(self, id):
         try:
-            data = (
-                session.query(self.model)
-                .filter_by(category_id=id)
-                .order_by(*self._get_order_columns())
-                .all()
-            )
+            current_period = self.get_current_period()
+            query = session.query(self.model).filter_by(category_id=id)
+            if current_period:
+                start_date = current_period.start_date
+                end_date = current_period.end_date
+                if self._hasattr_date():
+                    query = query.filter(self.model.date.between(start_date, end_date+timedelta(days=1)))
+            data = query.order_by(*self._get_order_columns()).all()
             return data
         except SQLAlchemyError as e:
             raise
@@ -377,22 +387,6 @@ class BaseController:
             raise
         finally:
             session.close()
-
-    # def get_column_headers_verbose_name(self):
-    #     column_headers = []
-    #     for column in self.model.__table__.columns:
-    #         column_header = column.info.get('verbose_name', column.name)
-    #         if column_header:
-    #             column_headers.append(column_header)
-
-    #     return column_headers
-
-    # def get_column_headers(self):
-    #     column_headers = []
-    #     for column in self.model.__table__.columns:
-    #         column_headers.append(column.name)
-
-    #     return column_headers
 
     def _get_order_columns(self):
         order_columns = []

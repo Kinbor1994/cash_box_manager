@@ -94,7 +94,7 @@ class ComboBox(QWidget):
             elif isinstance(item, dict):
                 # If item is a dictionary {"label": ..., "value": ...}
                 label = item.get('label', 'Unknown')
-                user_data = item.get('value', None)
+                user_data = item.get('id', None)
             elif hasattr(item, 'title') and hasattr(item, 'id'):
                 # If item is an object with 'title' and 'id' attributes (custom object)
                 label = item.title

@@ -4,6 +4,8 @@ from pathlib import Path
 import shutil
 from imports import QIcon
 
+current_period_id_file = Path("current_period_data.ksb")
+
 config_file = Path("config.json")
 init_solde_file = Path("initial_balance.json")
 
@@ -104,3 +106,68 @@ def save_database():
 
     # Copier le fichier de base de données pour créer une sauvegarde
     shutil.copyfile(source, destination)
+
+def write_id_to_file(id_value: str):
+    """
+    Write the given ID to a .ksb file.
+
+    Args:
+        id_value (int): The ID to be written to the file.
+    
+    Raises:
+        ValueError: If the ID value is empty.
+        IOError: If there is an error writing to the file.
+    """
+    try:
+        if not id_value:
+            raise ValueError("The ID value cannot be empty.")
+        
+        file = current_period_id_file
+        if file.exists():
+            file.write_text(id_value, encoding="utf-8")
+
+    except ValueError as ve:
+        raise ve
+    except IOError as io_err:
+        raise io_err
+    except Exception as e:
+        raise e
+
+
+def read_id_from_file() -> int:
+    """
+    Read the ID from a .ksb file.
+
+    Returns:
+        int: The ID read from the file, or an empty string if an error occurs.
+    
+    Raises:
+        FileNotFoundError: If the file does not exist.
+        IOError: If there is an error reading the file.
+    """
+    try:
+        file = current_period_id_file
+        if not file.exists():
+            raise FileNotFoundError(f"The file {file_path} does not exist.")
+        
+        return int(file.read_text())
+
+    except FileNotFoundError as fnf_err:
+        raise fnf_err
+    except IOError as io_err:
+        raise io_err
+    except Exception as e:
+        raise e
+
+if __name__ == "__main__":
+    # Example usage
+    file_path = "example_file.ksb"
+    id_value = "12345"
+
+    # Write the ID to the file
+    write_id_to_file(id_value)
+
+    # Read the ID from the file
+    retrieved_id = read_id_from_file()
+    print(f"The retrieved ID is: {retrieved_id}")
+

@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from sqlalchemy import Date, DateTime
 from babel.numbers import format_decimal
 
 from PySide6.QtWidgets import (
@@ -10,14 +10,13 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QMessageBox,
 )
-from sqlalchemy import Date, DateTime
+
 from pyside6_custom_widgets.button import Button
 from pyside6_custom_widgets.date_edit import DateEdit
 from pyside6_custom_widgets.label import Label
 from pyside6_custom_widgets.combobox_3 import ComboBox
-from pyside6_custom_widgets.labeled_date_edit import LabeledDateEdit
 from pyside6_custom_widgets.line_edit import LineEdit
-from pyside6_custom_widgets.widget_items_button import ActionButtonsWidget
+from pyside6_custom_widgets.widget_items_button import ActionButtonsWidget, ActionButtonsWidget2
 from utils.qss_file_loader import load_stylesheet
 
 
@@ -63,6 +62,7 @@ class CustomTableWidget(QWidget):
         self.create_button_command = create_command
         self.items_per_page = items_per_page
         self.current_page = 0
+        self.current_combo_filter_name = None
         self.instances = self._get_instances()
         self.filtered_instances = self._get_instances()
 
@@ -96,7 +96,7 @@ class CustomTableWidget(QWidget):
         )
         self.cancel_filter_button = Button(
             text="",
-            icon_name="fa.refresh",
+            icon_name="fa.times-circle",
             command=self.refresh_data,
             theme_color="secondary",
         )
@@ -363,6 +363,7 @@ class CustomTableWidget(QWidget):
         Refresh the data displayed in the table.
         """
         self._set_data()
+        self.update_combobox_items()
 
     def filter_data(self):
         """
@@ -510,6 +511,16 @@ class CustomTableWidget(QWidget):
                     )
         except Exception as e:
             QMessageBox.critical(self, "Erreur", f"Error deleting instance: {e}")
+
+    def update_combobox_items(self):
+        """
+        Update the items of the ComboBox filters when data changes.
+        """
+        combo_filter = self.findChild(ComboBox, self.current_combo_filter_name)
+        if combo_filter:
+            new_items = self.get_cbx_items(self.current_combo_filter_name)
+            combo_filter.combobox.clear()  # Clear existing items
+            combo_filter.set_items(new_items)  # Add updated items
 
     def get_cbx_items(self, column_name):
         object_list = self.controller.get_related_model_all(column_name)

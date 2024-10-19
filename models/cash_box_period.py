@@ -35,9 +35,11 @@ class CashBoxPeriod(BaseModel):
     )
     ending_balance = Column(
         Float,
+        default=0.0,
         nullable=True,
         info={
             "verbose_name": "Solde Final",
+            "editable":"false",
             "column_type": "numeric",
             "tab_col_index": 5,
         },
@@ -51,7 +53,7 @@ class CashBoxPeriod(BaseModel):
             "tab_col_index": 6,
         },
     )
-
+    
     def __str__(self):
         return f"(id={self.id}, start_date={self.start_date}, end_date={self.end_date}, initial_amount={self.initial_amount}, ending_balance={self.ending_balance}, is_open={self.is_open.title})"
 

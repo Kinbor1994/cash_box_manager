@@ -1,14 +1,17 @@
 from pathlib import Path
+from controllers.cash_box_controller import CashBoxPeriodController
 from controllers.user_controller import UserController
 from database.create_db import check_and_create_db
 from pyside6_custom_widgets.button import Button
 from pyside6_custom_widgets.labeled_line_edit import LabeledLineEdit
+from pyside6_custom_widgets.labeled_combobox_2 import LabeledComboBox
 from pyside6_custom_widgets.label import Label
 from imports import QDialog, QVBoxLayout, QHBoxLayout,QIcon, QLineEdit, QApplication,QSize, QMessageBox, QFrame
 from qt_material import apply_stylesheet
 
 from main import MainWindow
-from utils.utils import save_config_data, set_app_icon
+from utils.utils import save_config_data, set_app_icon, write_id_to_file
+from views.manage_periodes_views import CashBoxPeriodCreateView
 
 class SignIn(QDialog):
     """
@@ -22,9 +25,10 @@ class SignIn(QDialog):
         super().__init__(parent)
         self.setWindowTitle("CASH BOX MANAGER BY BOREL")
         set_app_icon(self)
-        self.setGeometry(100,100,400, 350)
-        self.setMinimumSize(QSize(400, 350))
-        self.setMaximumSize(QSize(400, 350))
+        self.setGeometry(100,100,400, 400)
+        self.setMinimumSize(QSize(400, 400))
+        self.setMaximumSize(QSize(400, 400))
+        self.is_any_period_created() # Vérifier s'il existe des exercices sinon en créer d'abord.
         self.controller = UserController()
         self.setup_ui()
         self.setup_connection()
@@ -46,7 +50,18 @@ class SignIn(QDialog):
         self.password_field = LabeledLineEdit("Password:", placeholder_text="Enter your password", required=True)
         self.password_field.line_edit.line_edit.setEchoMode(QLineEdit.Password)  # Mask the password
         layout.addWidget(self.password_field)
-
+        
+        #Current Period field
+        periodes = CashBoxPeriodController().get_all()
+        items = []
+        for period in periodes:
+            data = {}
+            data["id"] = period.id
+            data["label"] = f"{period.start_date.strftime("%d/%m/%Y")} - {period.end_date.strftime("%d/%m/%Y")}"
+            items.append(data)
+            
+        self.period_cbx = LabeledComboBox(label_text="Selectionnez un exercice...", required=True, items=items)
+        layout.addWidget(self.period_cbx)
         # Buttons
         button_layout = QHBoxLayout()
         self.connect_button = Button(text="Connect",icon_name="fa.sign-in",theme_color="primary")
@@ -83,17 +98,13 @@ class SignIn(QDialog):
         """
         Validates the fields and highlights any empty fields with a red border.
         """
-        fields = [self.username_field, self.password_field]
-        all_valid = True
+        fields = [self.username_field, self.password_field, self.period_cbx]
+        all_valid = []
 
         for field in fields:
-            if not field.is_valid():
-                field.line_edit.setStyleSheet("border: 2px solid red;")
-                all_valid = False
-            else:
-                field.line_edit.setStyleSheet("")  # Reset to default
+            all_valid.append(field.is_valid())
 
-        return all_valid
+        return all(all_valid)
 
     def get_credentials(self):
         """
@@ -103,9 +114,9 @@ class SignIn(QDialog):
             tuple: A tuple containing the username and password if valid, otherwise (None, None).
         """
         if self.validate_fields():
-            return self.username_field.get_text(), self.password_field.get_text()
+            return self.username_field.get_value(), self.password_field.get_value(), self.period_cbx.get_value()
         else:
-            return None, None
+            return None, None, None
 
     def on_submit(self):
         if self.validate_fields():
@@ -115,11 +126,12 @@ class SignIn(QDialog):
             
     def login(self):
         try:
-            username, password = self.get_credentials()
+            username, password, period_id = self.get_credentials()
             is_authenticated = self.controller.authenticate_user(username,password)
             if is_authenticated :
                 user = self.controller.get_user(username=username)
-                save_config_data(user[0], user[1])
+                save_config_data(user[0], user[1]) #Enregistrer les données de l'utilisateur connecté.
+                write_id_to_file(str(period_id)) #Enregistrer l'id de l'exercice choisit
                 self.open_dashboard()
             else:
                 QMessageBox.critical(self,"Error","Nom d'utilisateur ou Mot de passe incorrecte.")
@@ -146,7 +158,14 @@ class SignIn(QDialog):
             self.password_forget = PasswordForget(self.username_field.get_text()) 
             self.password_forget.show()
             self.close()
+
+    def is_any_period_created(self):
+        periodes = CashBoxPeriodController().get_all()
         
+        if not periodes:
+            form = CashBoxPeriodCreateView()
+            form.exec()
+    
     def showEvent(self,event):
         super().showEvent(event)
         check_and_create_db()

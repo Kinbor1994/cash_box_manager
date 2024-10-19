@@ -87,7 +87,7 @@ class ComboBox(QWidget):
                 user_data = item.id
             else:
                 label = str(item)
-                user_data = None
+                user_data = str(item)
 
             self.combobox.addItem(label, user_data)
 

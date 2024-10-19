@@ -1,9 +1,8 @@
-from pathlib import Path
-
 from babel.numbers import format_currency
+
+from controllers.cash_box_controller import CashBoxPeriodController
 from pyside6_custom_widgets.card import DashboardCardWidget
 from pyside6_custom_widgets.charts import (
-    BarChartWidget,
     BarChartWidgetWithTwoDataSets,
     PieChartWidget,
 )
@@ -17,7 +16,7 @@ from imports import (
     QScrollArea,
     Qt,
 )
-from utils.utils import get_initial_balance, set_app_icon
+from utils.utils import  set_app_icon
 from controllers.income_controller import IncomeController
 from controllers.expense_controller import ExpenseController
 from views import (
@@ -45,6 +44,7 @@ class MainWindow(Dashboard):
         set_app_icon(self)
         self.income_controller = IncomeController()
         self.expense_controller = ExpenseController()
+        self.cash_box_perid_controller =  CashBoxPeriodController()
         self.setup_pages()
 
     def setup_menu(self):
@@ -53,7 +53,6 @@ class MainWindow(Dashboard):
                 "File",
                 [
                     ("Fermer", self.close),
-                    ("Définir Solde Initial", self.open_initial_balance_form),
                     ("Actualiser", self.refresh_dashboard),
                 ],
             ),
@@ -204,7 +203,7 @@ class MainWindow(Dashboard):
         total_expense = self.expense_controller.get_total_expense
         total_income = self.income_controller.get_total_income
 
-        inital_balance = get_initial_balance().get("solde", "0.0")
+        inital_balance = self.cash_box_perid_controller.get_initial_balance
 
         main_widget = QWidget()
         self.page_scroll_area = QScrollArea()
@@ -284,7 +283,7 @@ class MainWindow(Dashboard):
         income_controller = IncomeController()
         total_income = income_controller.get_total_income
 
-        initial_balance = get_initial_balance().get("solde", "0.0")
+        initial_balance = self.cash_box_perid_controller.get_initial_balance
 
         # Mettre à jour le contenu des widgets du tableau de bord
         self.initial_balance_card.set_content(

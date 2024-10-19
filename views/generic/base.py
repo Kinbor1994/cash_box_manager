@@ -242,7 +242,6 @@ class UpdateView(BaseFormWidget):
                 if isinstance(field, LabeledComboBox):
                     foreign_key = getattr(self.model.__table__.columns[column_name], 'foreign_keys', None)
                     if foreign_key:
-                        related_model = self.controller.get_related_model(column_name)
                         related_instance = self.controller.get_related_model_item_by_id("category_id", value)
                         display_value = getattr(related_instance, 'title')  
                         field.set_value(display_value)
@@ -312,7 +311,7 @@ class ListView(QWidget):
         """
         Edits the data of a specific row by invoking the controller.
         """
-        edit_form = UpdateView(title=f"Modification d'une entrée de {self.model.__verbose_name__}", model=self.model, controller=self.controller, id=instance_id)
+        edit_form = UpdateView(title=f"Modification d'une entrée de {self.model.__verbose_name__ if hasattr(self.model, "__verbose_name__")else self.model.__tablename__}", model=self.model, controller=self.controller, id=instance_id)
         edit_form.refresh_signal.connect(self.refresh_data)
         edit_form.exec()
 
@@ -336,6 +335,10 @@ class ListView(QWidget):
             QMessageBox.critical(self, "Erreur", f"Error deleting instance: {e}")
             
     def create_instance(self):
-        create_form = CreateView(f"Ajouter une nouvelle entrée de {self.model.__verbose_name__}.", model=self.model, controller=self.controller)
+        create_form = CreateView(f"Ajouter une nouvelle entrée de {self.model.__verbose_name__ if hasattr(self.model, "__verbose_name__")else self.model.__tablename__}.", model=self.model, controller=self.controller)
         create_form.refresh_data_signal.connect(self.refresh_data)
         create_form.exec()
+        
+    def showEvent(self,event):
+        super().showEvent(event)
+        self.refresh_data()
